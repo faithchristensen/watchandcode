@@ -3,7 +3,8 @@ var todoList = {
   addTodo: function(todoText) {
     this.todos.push({
       todoText: todoText,
-      completed: false
+      completed: false,
+      editMode: false,
     });
   },
   changeTodo: function(position, todoText) {
@@ -56,16 +57,17 @@ var handlers = {
     todoList.deleteTodo(position);
     view.displayTodos();
   },
-  toggleCompleted: function() {
-    var toggleCompletedPositionInput = document.getElementById('toggleCompletedPositionInput');
-    todoList.toggleCompleted(toggleCompletedPositionInput.valueAsNumber);
-    toggleCompletedPositionInput.value = '';
+  toggleCompleted: function(id) {
+    // var toggleCompletedPositionInput = document.getElementById('toggleCompletedPositionInput');
+
+    todoList.toggleCompleted(id);
+    // toggleCompletedPositionInput.value = '';
     view.displayTodos();
   },
   toggleAll: function() {
     todoList.toggleAll();
     view.displayTodos();
-  }  
+  }
 };
 
 var view = {
@@ -75,36 +77,48 @@ var view = {
     
     todoList.todos.forEach(function(todo, position) {
       var todoLi = document.createElement('li');
-      var todoTextWithCompletion = '';
+      // var todoTextWithCompletion = '';
 
       if (todo.completed === true) {
-        todoTextWithCompletion = '(x) ' + todo.todoText;
-      } else {
-        todoTextWithCompletion = '( ) ' + todo.todoText;
+       todoLi.classList.add("line_through") 
       }
       
       todoLi.id = position;
-      todoLi.textContent = todoTextWithCompletion;
+      todoLi.textContent = todo.todoText;
+      todoLi.prepend(this.createCheckbox(todo.completed));
       todoLi.appendChild(this.createDeleteButton());
       todosUl.appendChild(todoLi);
+      
     }, this);  
     },
-    
   createDeleteButton: function() {
     var deleteButton = document.createElement('button');
     deleteButton.textContent = 'Delete';
     deleteButton.className = 'deleteButton';
     return deleteButton;
   },
+  createCheckbox: function(completed) {
+    var checkboxButton = document.createElement('input');
+    checkboxButton.type = 'checkbox';
+    checkboxButton.className = 'checkboxButton';
+    if (completed){
+      checkboxButton.checked = true
+    }
+    return checkboxButton;
+  },
   setUpEventListeners: function() {
     var todosUl = document.querySelector('ul');
     todosUl.addEventListener('click', function(event) {
-    var elementClicked = event.target;
-    if (elementClicked.className === 'deleteButton') {
-      handlers.deleteTodo(parseInt(elementClicked.parentNode.id));
-    }
-  });
-  }
+      var elementClicked = event.target;
+      if (elementClicked.className === 'deleteButton') {
+        console.log('yo')
+        handlers.deleteTodo(parseInt(elementClicked.parentNode.id));
+      }
+      if (elementClicked.className === 'checkboxButton') {
+        handlers.toggleCompleted(parseInt(elementClicked.parentNode.id));
+      }
+    });
+  },
 };
 
 view.setUpEventListeners();
