@@ -17,11 +17,18 @@ var todoList = {
     var todo = this.todos[position];
     todo.completed = !todo.completed;
   },
+  enableEditMode: function(position) {
+    var todo = this.todos[position];
+    todo.editMode = true;
+  },
+  disableEditMode: function(position){
+    var todo = this.todos[position];
+    todo.editMode = false;
+  },
   toggleAll: function() {
     var totalTodos = this.todos.length;
     var completedTodos = 0;
     
-    // Get number of completed todos.
     this.todos.forEach(function(todo) {
       if (todo.completed === true) {
         completedTodos++;
@@ -45,12 +52,9 @@ var handlers = {
     addTodoTextInput.value = '';
     view.displayTodos();
   },
-  changeTodo: function() {
-    var changeTodoPositionInput = document.getElementById('changeTodoPositionInput');
-    var changeTodoTextInput = document.getElementById('changeTodoTextInput');
-    todoList.changeTodo(changeTodoPositionInput.valueAsNumber, changeTodoTextInput.value);
-    changeTodoPositionInput.value = '';
-    changeTodoTextInput.value = '';
+  changeTodo: function(position, newText) {
+    todoList.changeTodo(position, newText);
+    todoList.disableEditMode(position);
     view.displayTodos();
   },
   deleteTodo: function(position) {
@@ -58,10 +62,15 @@ var handlers = {
     view.displayTodos();
   },
   toggleCompleted: function(id) {
-    // var toggleCompletedPositionInput = document.getElementById('toggleCompletedPositionInput');
-
     todoList.toggleCompleted(id);
-    // toggleCompletedPositionInput.value = '';
+    view.displayTodos();
+  },
+  enableEditMode: function(position){
+    todoList.enableEditMode(position);
+    view.displayTodos();
+  },
+  disableEditMode: function(position){
+    todoList.disableEditMode(position);
     view.displayTodos();
   },
   toggleAll: function() {
@@ -77,18 +86,26 @@ var view = {
     
     todoList.todos.forEach(function(todo, position) {
       var todoLi = document.createElement('li');
-      // var todoTextWithCompletion = '';
 
       if (todo.completed === true) {
        todoLi.classList.add("line_through") 
       }
       
+      if (todo.editMode === true) {
+        var editInput = document.createElement('input')
+        editInput.className = 'editInput'
+        editInput.value = todo.todoText
+        todoLi.appendChild(editInput)
+        todoLi.appendChild(this.createSaveButton());
+      } else {
+        todoLi.textContent = todo.todoText;
+        todoLi.appendChild(this.createEditButton());
+      }
+      
       todoLi.id = position;
-      todoLi.textContent = todo.todoText;
       todoLi.prepend(this.createCheckbox(todo.completed));
       todoLi.appendChild(this.createDeleteButton());
       todosUl.appendChild(todoLi);
-      
     }, this);  
     },
   createDeleteButton: function() {
@@ -96,6 +113,18 @@ var view = {
     deleteButton.textContent = 'Delete';
     deleteButton.className = 'deleteButton';
     return deleteButton;
+  },
+  createEditButton: function() {
+    var editButton = document.createElement('button');
+    editButton.textContent = 'Edit';
+    editButton.className = 'editButton';
+    return editButton;
+  },
+  createSaveButton: function() {
+    var saveButton = document.createElement('button');
+    saveButton.textContent = 'Save';
+    saveButton.className = 'saveButton';
+    return saveButton;
   },
   createCheckbox: function(completed) {
     var checkboxButton = document.createElement('input');
@@ -111,8 +140,19 @@ var view = {
     todosUl.addEventListener('click', function(event) {
       var elementClicked = event.target;
       if (elementClicked.className === 'deleteButton') {
-        console.log('yo')
         handlers.deleteTodo(parseInt(elementClicked.parentNode.id));
+      }
+      if (elementClicked.className === 'editButton') {
+        handlers.enableEditMode(parseInt(elementClicked.parentNode.id))
+      }
+      if (elementClicked.className === 'saveButton') {
+        var parentId = parseInt(elementClicked.parentNode.id)
+        
+        var parentNode = elementClicked.parentNode
+        var editInput = parentNode.getElementsByClassName('editInput')[0]
+        var text = editInput.value
+        
+        handlers.changeTodo(parentId, text)
       }
       if (elementClicked.className === 'checkboxButton') {
         handlers.toggleCompleted(parseInt(elementClicked.parentNode.id));

@@ -1,0 +1,8 @@
+.line_through {
+    text-decoration: line-through;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding-inline-start: 0px;
+  }
