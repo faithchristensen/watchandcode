@@ -105,7 +105,9 @@ var view = {
       todoLi.id = position;
       todoLi.prepend(this.createCheckbox(todo.completed));
       todoLi.appendChild(this.createDeleteButton());
+      
       todosUl.appendChild(todoLi);
+      
     }, this);  
     },
   createDeleteButton: function() {
@@ -118,6 +120,7 @@ var view = {
     var editButton = document.createElement('button');
     editButton.textContent = 'Edit';
     editButton.className = 'editButton';
+    editButton.classList.add("todo-buttons");
     return editButton;
   },
   createSaveButton: function() {
@@ -138,14 +141,14 @@ var view = {
   setUpEventListeners: function() {
     var todosUl = document.querySelector('ul');
     todosUl.addEventListener('click', function(event) {
-      var elementClicked = event.target;
-      if (elementClicked.className === 'deleteButton') {
+      var elementClicked = event.target;   
+      if (elementClicked.classList.contains('deleteButton')) {
         handlers.deleteTodo(parseInt(elementClicked.parentNode.id));
       }
-      if (elementClicked.className === 'editButton') {
+      if (elementClicked.classList.contains('editButton')) {
         handlers.enableEditMode(parseInt(elementClicked.parentNode.id))
       }
-      if (elementClicked.className === 'saveButton') {
+      if (elementClicked.classList.contains('saveButton')) {
         var parentId = parseInt(elementClicked.parentNode.id)
         
         var parentNode = elementClicked.parentNode
@@ -154,7 +157,7 @@ var view = {
         
         handlers.changeTodo(parentId, text)
       }
-      if (elementClicked.className === 'checkboxButton') {
+      if (elementClicked.classList.contains('checkboxButton')) {
         handlers.toggleCompleted(parseInt(elementClicked.parentNode.id));
       }
     });

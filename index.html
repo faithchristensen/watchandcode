@@ -1,28 +1,34 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Practical Todos</title>
+    <title class="flex">Practical Todos</title>
     <link id="favicon" rel="icon" href="https://cdn.gomix.com/2bdfb3f8-05ef-4035-a06e-2043962a3a13%2Ffavicon.ico" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="/styles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans" rel="stylesheet">
   </head>
-  <body>
-    <h1>Todo List</h1>
-<!--     <i class="material-icons">&#xe254;</i> -->
+  <body class="flex">
+    <div>
+      <h1 class="title-font">TODO LIST</h1>
 
-    <div>
-      <button onclick="handlers.toggleAll()">Toggle All</button>
+      <div class="flex">
+
+        <div>
+          <div class='add_input_button'>
+            <input id="addTodoTextInput" type="text" class="input-design">
+            <button onclick="handlers.addTodo()" class="add-button">Add</button>
+          </div>
+          <ul></ul>
+        </div>
+
+      </div>
+
+      <div class="toggle-button">
+        <button onclick="handlers.toggleAll()">Toggle All</button>
+      </div>
+
+      <script src="/client.js"></script>
     </div>
-    
-    <div>
-      <button onclick="handlers.addTodo()">Add</button>
-      <input id="addTodoTextInput" type="text">
-    </div>
-    
-    <ul>
-    </ul>
-    <script src="/client.js"></script>
   </body>
 </html>
-

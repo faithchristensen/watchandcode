@@ -6,3 +6,50 @@
     list-style-type: none;
     padding-inline-start: 0px;
   }
+  
+  .flex {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .title-font {
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 60px;
+    text-align: center;
+  }
+  
+  button {
+    background-color: red;
+    color: white;
+    border-width: 0px;
+    border-radius: 5px;
+    padding: 5px 10px;
+  }
+  
+  button:focus, input:focus {
+    outline:0;
+  }
+  
+  .add-button {
+    border-radius: 0px 5px 5px 0px;
+    padding: 7px 20px 6px 20px;
+  }
+  
+  .toggle-button {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .todo-buttons {
+    margin: 5px;
+  }
+  
+  .input-design {
+      width: 400px;
+      height: 20px;
+  }
+  
+  .add_input_button{
+    display: flex;
+    align-items: center;
+  }
