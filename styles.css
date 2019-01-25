@@ -17,6 +17,11 @@
     font-size: 60px;
     text-align: center;
   }
+
+  .input-design {
+    width: 400px;
+    height: 20px;
+}
   
   button {
     background-color: red;
@@ -44,12 +49,20 @@
     margin: 5px;
   }
   
-  .input-design {
-      width: 400px;
-      height: 20px;
-  }
-  
   .add_input_button{
     display: flex;
     align-items: center;
+  }
+
+  .edit-icon {
+      width: 12px;
+      height: 12px;
+  }
+
+  .delete-icon {
+      width: 12px;
+  }
+
+  .checkbox-design {
+      border-radius: 50%;
   }

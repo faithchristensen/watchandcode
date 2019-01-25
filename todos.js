@@ -112,21 +112,28 @@ var view = {
     },
   createDeleteButton: function() {
     var deleteButton = document.createElement('button');
-    deleteButton.textContent = 'Delete';
     deleteButton.className = 'deleteButton';
+    var deleteIcon = document.createElement('img');
+    deleteIcon.src = 'Delete.png';
+    deleteIcon.className = 'delete-icon';
+    deleteButton.appendChild(deleteIcon);
     return deleteButton;
   },
   createEditButton: function() {
     var editButton = document.createElement('button');
-    editButton.textContent = 'Edit';
+    var editIcon = document.createElement('img');
+    editIcon.src = 'Edit.png';
     editButton.className = 'editButton';
     editButton.classList.add("todo-buttons");
+    editIcon.className = 'edit-icon';
+    editButton.appendChild(editIcon);
     return editButton;
   },
   createSaveButton: function() {
     var saveButton = document.createElement('button');
     saveButton.textContent = 'Save';
     saveButton.className = 'saveButton';
+    saveButton.classList.add("todo-buttons");
     return saveButton;
   },
   createCheckbox: function(completed) {
@@ -136,6 +143,7 @@ var view = {
     if (completed){
       checkboxButton.checked = true
     }
+    checkboxButton.className = 'checkbox-design';
     return checkboxButton;
   },
   setUpEventListeners: function() {
